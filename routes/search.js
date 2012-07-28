@@ -25,15 +25,17 @@ exports.listPlaces = function( req, res, next ) {
 	// doctor, dentist, pharmacy, etc
 	
 	var placetype = req.params.placetype;
-	
+	res.header( 'content-type', 'text/html');	
 	req.collection.find( {}, function( err, cursor ) {
 		cursor.toArray(function(err, items) {
-		res.header( 'content-type', 'text/html');			
+
+		res.write('<table>');			
 		for(var i = 0; i < items.length; i++){
-			res.write( '' + items[i].id + ' : ' + items[i].name + ' : ' + items[i].vicinity + '<br>');			
+			res.write( '<tr><td>' + items[i].id + '</td><td><a href="/test/places/'+placetype+'/edit/'+items[i].id+'/"> ' + items[i].name + '</a></td><td>' + items[i].vicinity + '</td></tr>');			
 			}
 			res.end();
 		});
+		res.write('</table>');
 	});
 	/*
 	req.collection.count( {}, function( err, count ) {
