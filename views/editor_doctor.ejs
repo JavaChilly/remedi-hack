@@ -1,0 +1,61 @@
+<% 
+	var insurances = languages = specialties = [];
+	var acceptingNew = boardCertified = false;
+	var affiliation = '';
+	
+	if (overlayRecord != null) {
+		insurances = overlayRecord.insurances ? overlayRecord.insurances : [];
+		languages = overlayRecord.languages ? overlayRecord.languages : [];
+		specialties = overlayRecord.specialties ? overlayRecord.specialties : [];
+		acceptingNew = overlayRecord.acceptingNew ? overlayRecord.acceptingNew : false;
+		boardCertified = overlayRecord.boardCertified ? overlayRecord.boardCertified : false;
+		affiliation = overlayRecord.affiliation ? overlayRecord.affiliation : '';
+	}
+%>
+<html>
+	<body>
+		<form method="post" action="/test/places/doctor/save/<%=record.id%>/">
+			Name:</br>
+			<input type="text" name="record.name" value="<%=record.name%>"/>
+			
+			<p>Insurances: (one per line)<br>
+			<textarea name="insurances" rows="5" cols="45"><%
+			for ( var i = 0; i < insurances.length; i++) {
+				%><%=insurances[i]%>
+<%
+			}
+			%></textarea>
+			</p>
+			
+			<p>Specialties: (one per line)<br>
+			<textarea name="specialties" rows="5" cols="45"><%
+			for ( var i = 0; i < specialties.length; i++) {
+				%><%=specialties[i]%>
+<%
+			}
+			%></textarea>
+			</p>
+			
+			<p>
+				<input type="checkbox" name="accepting_new"<%=(acceptingNew ? ' checked' : '')%>> Accepting New Patients<br>
+				<input type="checkbox" name="board_certified"<%=(boardCertified ? ' checked' : '')%>> Board Certified<br>
+			</p>
+			
+			<p>Languages: (one per line)<br>
+			<textarea name="languages" rows="3" cols="45"><%
+			for ( var i = 0; i < specialties.length; i++) {
+				%><%=specialties[i]%>
+<%
+			}
+			%></textarea>
+			</p>
+		
+			<p>
+			Hospital Affiliation<br>
+			<input type="text" name="affiliation" value="<%=affiliation%>">
+			</p>
+			
+			<input type="submit" name="submit" value="Save">
+		</form>
+	</body>
+</html>

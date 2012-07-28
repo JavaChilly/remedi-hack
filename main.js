@@ -24,6 +24,8 @@ app.configure(function() {
 	app.use( express.bodyParser() );
 	app.use( app.router );
 	
+	app.use( logger.logInternalError );
+	
 	// hardcoded db instance reference
 	dbInstance = db.connect( config.mongo );
 	dbInstance.open( function( err ) { 
@@ -57,7 +59,17 @@ app.param(
 				// Append collection to request object.
 				req.collection = collection;
 				// Continue to next handler.
-				return next();
+				
+				var overlayName = "" + placetype + "_overlay";
+				
+				req.db.collection(
+					overlayName,
+					function( err, overlayCollection ) {
+						if ( err ) return next( err );
+						req.overlayCollection = overlayCollection;
+						return next();
+					}
+				);
 			}
 		);
 	}
