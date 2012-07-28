@@ -21,6 +21,28 @@ exports.getPlaces = function( req, res, next ) {
 	*/
 }
 
+exports.listPlaces = function( req, res, next ) {
+	// doctor, dentist, pharmacy, etc
+	
+	var placetype = req.params.placetype;
+	
+	req.collection.find( {}, function( err, cursor ) {
+		cursor.toArray(function(err, items) {
+		res.header( 'content-type', 'text/html');			
+		for(var i = 0; i < items.length; i++){
+			res.write( '' + items[i].id + ' : ' + items[i].name + ' : ' + items[i].vicinity + '<br>');			
+			}
+			res.end();
+		});
+	});
+	/*
+	req.collection.count( {}, function( err, count ) {
+		if ( err ) { return next( err ); }
+		res.send( "There are " + count + " " + placetype + " places" );
+	});
+	*/
+}
+
 exports.setPlaces = function( req, res, next ) {
 	console.log( req.body.doctorContent );
 	var places = JSON.parse( req.body.doctorContent );

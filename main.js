@@ -63,7 +63,8 @@ app.param(
 );
 
 var testFunc = function( req, res, next) { /*console.log(req.body);*/ next(); };
-
+app.get( '/:environment/places/:placetype/list/', routes.search.listPlaces );
 app.get( '/:environment/places/:placetype/', routes.search.getPlaces );
 app.post( '/:environment/places/:placetype/', testFunc, routes.search.setPlaces );
+
 
