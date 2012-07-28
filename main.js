@@ -3,7 +3,8 @@ var express = require( 'express' ),
 	db		= require( './lib/db' ),
 	logger  = require( './lib/logger' ),
     routes  = {
-		search : require( './routes/search' )
+		search : require( './routes/search' ),
+		edit   : require( './routes/edit' )
 	};
 
 var DEBUG   = true;
@@ -67,4 +68,5 @@ app.get( '/:environment/places/:placetype/list/', routes.search.listPlaces );
 app.get( '/:environment/places/:placetype/', routes.search.getPlaces );
 app.post( '/:environment/places/:placetype/', testFunc, routes.search.setPlaces );
 
-
+app.get( '/:environment/places/:placetype/edit/:id/', routes.edit.showEditor );
+app.post( '/:environment/places/:placetype/save/:id/', routes.edit.saveEditor );
