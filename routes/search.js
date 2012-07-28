@@ -22,8 +22,8 @@ exports.getPlaces = function( req, res, next ) {
 }
 
 exports.setPlaces = function( req, res, next ) {
-	console.log( req.body );
-	var places = JSON.parse( req.body );
+	console.log( req.body.doctorContent );
+	var places = JSON.parse( req.body.doctorContent );
 	if ( !places.places ) {
 		// single place post
 		places = {places : [ places ]};
@@ -32,9 +32,14 @@ exports.setPlaces = function( req, res, next ) {
 	places = places.places;
 	
 	// doctor, dentist, pharmacy, etc
-	var placeType = req.params.placeType;
+	var placetype = req.params.placetype;
 	
 	for ( var i = 0; i < places.length; i++ ) {
-		
+		req.collection.insert( places[i] , function( err, docs ){ 
+			console.log( "Inserted " + docs );
+		});
+
 	}
+	res.redirect('/test/places/'+placetype+'/');
+
 }
