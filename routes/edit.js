@@ -43,7 +43,8 @@ exports.saveEditor = function( req, res, next ) {
 		languages   : linesToArray(req.body.languages),
 		affiliation : req.body.affiliation ? req.body.affiliation : '',
 		acceptingNew   : req.body.accepting_new ? true : false,
-		boardCertified :req.body.board_certified ? true : false
+		boardCertified : req.body.board_certified ? true : false,
+		gender         : req.body.gender
 	};
 	
 	req.collection.findOne( { id : overlayRecord.id }, function( err, standardRecord ) {

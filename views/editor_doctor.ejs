@@ -1,7 +1,7 @@
 <% 
 	var insurances = languages = specialties = [];
 	var acceptingNew = boardCertified = false;
-	var affiliation = '';
+	var affiliation = gender = '';
 	
 	if (overlayRecord != null) {
 		insurances = overlayRecord.insurances ? overlayRecord.insurances : [];
@@ -10,6 +10,7 @@
 		acceptingNew = overlayRecord.acceptingNew ? overlayRecord.acceptingNew : false;
 		boardCertified = overlayRecord.boardCertified ? overlayRecord.boardCertified : false;
 		affiliation = overlayRecord.affiliation ? overlayRecord.affiliation : '';
+		gender = overlayRecord.gender ? overlayRecord.gender : '';
 	}
 %>
 <html>
@@ -17,6 +18,14 @@
 		<form method="post" action="/test/places/doctor/save/<%=record.id%>/">
 			Name:</br>
 			<input type="text" name="record.name" value="<%=record.name%>"/>
+			
+			<p>Gender:<br>
+			<select name="gender">
+				<option value="">-select-</option>
+				<option value="male"<%=(gender == "male" ? " selected" : "")%>>Male</option>
+				<option value="female"<%=(gender == "female" ? " selected" : "")%>>Female</option>
+			</select>
+			</p>
 			
 			<p>Insurances: (one per line)<br>
 			<textarea name="insurances" rows="5" cols="45"><%
