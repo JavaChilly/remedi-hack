@@ -25,68 +25,81 @@
       function initialize() {
         
 		if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position){
-		var latitude = position.coords.latitude;
-        var longitude = position.coords.longitude;
-		var hollywood = new google.maps.LatLng(latitude, longitude);
+        	navigator.geolocation.getCurrentPosition(function(position){
+				//var latitude = position.coords.latitude;
+				var latitude  = 34.101708;
+        		//var longitude = position.coords.longitude;
+				var longitude = -118.344324;
+				var hollywood = new google.maps.LatLng(latitude, longitude);
 
-        map = new google.maps.Map(document.getElementById('map'), {
-          mapTypeId: google.maps.MapTypeId.ROADMAP,
-          center: hollywood,
-          zoom: 14
-        });
+        		map = new google.maps.Map(document.getElementById('map'), {
+          			mapTypeId: google.maps.MapTypeId.ROADMAP,
+		        	center: hollywood,
+          			zoom: 14
+        		});
 
-        var request = {
-          location: hollywood,
-          radius: 1000,
-          types: ['doctor']
-        };
+	        	var request = {
+	          		location: hollywood,
+	          		radius: 1000,
+	          		types: ['doctor']
+	        	};
 		
-		var marker = new google.maps.Marker({
-			map: map,
-			position: hollywood,
-			icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'
-		});
+				var marker = new google.maps.Marker({
+					map: map,
+					position: hollywood,
+					icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'
+				});
 		
-		google.maps.event.addListener(marker, 'click', function() {
-          infowindow.setContent("Your location.");
-          infowindow.open(map, this);
-		  //THIS IS WHERE WE CALL OUR SHIT
-        })
+				google.maps.event.addListener(marker, 'click', function() {
+		          infowindow.setContent("Your location.");
+		          infowindow.open(map, this);
+				  //THIS IS WHERE WE CALL OUR SHIT
+		        });
 		
-        infowindow = new google.maps.InfoWindow();
+        		infowindow = new google.maps.InfoWindow();
         		
-		var service = new google.maps.places.PlacesService(map);
-        service.search(request, callback);
-      });
-	  }else{
-		alert("Your browser sucks- can't geolocate.");
-	  }
+				var service = new google.maps.places.PlacesService(map);
+        		service.search(request, callback);
+      		});
+
+	  	}else{
+			alert("Your browser sucks- can't geolocate.");
+	  	}
+	
 	  }
 	  
       function callback(results, status) {
-        if (status == google.maps.places.PlacesServiceStatus.OK) {
+      	if (status == google.maps.places.PlacesServiceStatus.OK) {
+		  
+		  var locations = {};
           for (var i = 0; i < results.length; i++) {
-            createMarker(results[i]);
-	    IDs[i] = results[i].id;
+            // put the ids in a flat array for filtering
+	    	IDs[i] = results[i].id;
+		    // store the locations in a hashmap, so we can place markers later
+		    locations[results[i]] = results[i];
           }
-          console.log(IDs);
+          
+		  console.log(IDs);
 
           $.ajax({
-        url: '/test/places/doctor/filter/',
-        type: 'POST',
-        data: 'doctorContent='+JSON.stringify({ids:IDs})+'&provider='+provider,
-        contentType: "application/x-www-form-urlencoded",
-	dataType: "json",
-        success : function (jsonObj) {
-            // Code here
-	  		console.log("Great success!");
-        }
-	  });
+        	url: '/test/places/doctor/filter/',
+	        type: 'POST',
+	        data: 'doctorContent='+JSON.stringify({ids:IDs})+'&provider='+provider,
+        	contentType: "application/x-www-form-urlencoded",
+			dataType: "json",
+        	success : function (filteredMatches) {
+            	for ( var i = 0; i < filteredMatches.length; i++) {
+					var match = filteredMatches[i];
+					createMarker(match, locations[match.id]);
+				}
+				console.log(jsonObj);
+	  			console.log("Great success!");
+        	}
+	  	  });
         }
       }
 
-      function createMarker(place) {
+      function createMarker(details, place) {
         var placeLoc = place.geometry.location;
         var marker = new google.maps.Marker({
           map: map,
@@ -94,27 +107,38 @@
         });
 
         google.maps.event.addListener(marker, 'click', function() {
-          infowindow.setContent(place.name);
-          infowindow.open(map, this);
-		  //THIS IS WHERE WE CALL OUR SHIT
+		  $('#details').html([
+			  formatDetail('Name', details.name),
+			  formatDetail('Gender', details.gender),
+			  formatDetail('Languages', details.languages),
+			  formatDetail('Specialties', details.specialties),
+			  formatDetail('Accepting Patients', details.acceptingNew ? 'Yes' : 'No'),
+			  formatDetail('Board Certified', details.boardCertified ? 'Yes' : 'No'),
+			  formatDetail('Affiliation', details.affiliation)
+			]);
+			
+          //infowindow.setContent(place.name);
+          //infowindow.open(map, this);
         });
       }
-	  /*
-	  jsonObj.push({ids: IDs, insurer: provider});
-	  console.log(IDs.length);
-          console.log(JSON.stringify(jsonObj));
-*/
-	  
-	  
+
+	  function formatDetail(label, value) {
+		return [
+		'<div class="detail">',
+		'<div class="label">', label, '</div>',
+		'<div class="value">', (typeof value == "object" ? value.join(', ') : value), '</div>',
+		'</div>'
+		].join('');
+	  }
 	  
       google.maps.event.addDomListener(window, 'load', initialize);
     </script>
   </head>
   <body>
+	<div><b>Doctors Near You</b></div>
     <div id="map"></div>
-    <div id="text">
-      <pre>
-	  Google Map of Nearby Doctors
-      </pre>
+    <div id="details">
+	
+    </div>
   </body>
 </html>

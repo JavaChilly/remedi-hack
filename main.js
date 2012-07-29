@@ -86,3 +86,4 @@ app.get( '/:environment/places/:placetype/', routes.search.getPlaces );
 app.post( '/:environment/places/:placetype/', testFunc, routes.search.setPlaces );
 app.get( '/:environment/places/:placetype/edit/:id/', routes.edit.showEditor );
 app.post( '/:environment/places/:placetype/save/:id/', routes.edit.saveEditor );
+
