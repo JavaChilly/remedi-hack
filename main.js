@@ -5,7 +5,8 @@ var express = require( 'express' ),
     routes  = {
 		search   : require( './routes/search' ),
 		edit     : require( './routes/edit' ),
-		accounts : require( './routes/accounts' )
+		accounts : require( './routes/accounts' ),
+		mhealth  : require( './routes/mhealth' )
 	};
 
 var DEBUG   = true;
@@ -78,6 +79,7 @@ app.param(
 
 var testFunc = function( req, res, next) { /*console.log(req.body);*/ next(); };
 
+app.get( '/mhealthCallback/', routes.mhealth.loginCallback );
 app.get( '/accounts/', routes.accounts.list );
 
 app.get( '/:environment/places/:placetype/list/', routes.search.listPlaces );
