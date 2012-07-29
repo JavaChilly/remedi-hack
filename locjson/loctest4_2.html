@@ -48,6 +48,12 @@
 			icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'
 		});
 		
+		google.maps.event.addListener(marker, 'click', function() {
+          infowindow.setContent("Your location.");
+          infowindow.open(map, this);
+		  //THIS IS WHERE WE CALL OUR SHIT
+        })
+		
         infowindow = new google.maps.InfoWindow();
         		
 		var service = new google.maps.places.PlacesService(map);
