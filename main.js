@@ -3,8 +3,9 @@ var express = require( 'express' ),
 	db		= require( './lib/db' ),
 	logger  = require( './lib/logger' ),
     routes  = {
-		search : require( './routes/search' ),
-		edit   : require( './routes/edit' )
+		search   : require( './routes/search' ),
+		edit     : require( './routes/edit' ),
+		accounts : require( './routes/accounts' )
 	};
 
 var DEBUG   = true;
@@ -76,6 +77,9 @@ app.param(
 );
 
 var testFunc = function( req, res, next) { /*console.log(req.body);*/ next(); };
+
+app.get( '/accounts/', routes.accounts.list );
+
 app.get( '/:environment/places/:placetype/list/', routes.search.listPlaces );
 app.post( '/:environment/places/:placetype/filter/', routes.search.filterPlaces );
 app.get( '/:environment/places/:placetype/', routes.search.getPlaces );
