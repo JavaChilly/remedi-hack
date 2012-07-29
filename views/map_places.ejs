@@ -10,19 +10,32 @@
 	<script src="http://jqueryjs.googlecode.com/files/jquery-1.2.6.min.js"></script>
 	
     <style>
-      #map {
-        height: 205px;
-        width: 310px;
-        border: 1px solid #333;
-        margin-top: 0;
-      }
+	#map {
+	        height: 205px;
+	        width: 310px;
+	        border: 1px solid #333;
+	        margin-top: 0;
+	}
 
-
+	#instructions {
+		text-align: center;
+		font-weight: bold;
+        	margin-top: 5px;
+		margin-bottom: 5px;	
+	
+	}
 	#wrapper {
 		margin: 0 auto;		
 		width: 320px;
 	}
 	
+	#footer {
+		background-image: url('/images/new_logo.png');
+		width: 310px;
+		height: 57px;
+		border-collapse:collapse;
+		border:1px solid #666;
+	}
 	#header {
 		padding-top: 10px;
 		font-size: 16pt;
@@ -30,12 +43,21 @@
 		height: 36px;
 		text-align: center;
 		color: white;
-		width: 312px;
+		width: 310px;
+		border-collapse:collapse;
+		border:1px solid #666;	
+
 	}
+
+	#smallico {
+		border-collapse:collapse;
+		border:1px solid #999;
+	}
+
 	body {
 		margin: 0;
 		padding: 0;
-		font-family: sans-serif;
+		font-family: “Myriad Pro”, Arial, Helvetica, Tahoma, sans-serif;
 
 	}
 
@@ -112,7 +134,8 @@
 				var hollywood = new google.maps.LatLng(latitude, longitude);
 
         		map = new google.maps.Map(document.getElementById('map'), {
-          			mapTypeId: google.maps.MapTypeId.ROADMAP,
+				disableDefaultUI : true,          			
+				mapTypeId: google.maps.MapTypeId.ROADMAP,
 		        	center: hollywood,
           			zoom: 14
         		});
@@ -158,7 +181,7 @@
 		    locations[results[i].id] = results[i];
           }
           
-		  console.log(IDs);
+		 // console.log(IDs);
 
           $.ajax({
         	url: '/test/places/doctor/filter/',
@@ -171,8 +194,8 @@
 					var match = filteredMatches[i];
 					createMarker(match, locations[match.id]);
 				}
-				console.log(jsonObj);
-	  			console.log("Great success!");
+				//console.log(jsonObj);
+	  			//console.log("Great success!");
         	}
 	  	  });
         }
@@ -186,8 +209,11 @@
         });
 
         google.maps.event.addListener(marker, 'click', function() {
-		  $('#details').html([
+		infowindow.setContent(details.name);
+          	infowindow.open(map, this);		  
+		$('#details').html([
 			  formatDetail('Name', details.name),
+			  formatDetail('Address', place.vicinity),
 			  formatDetail('Phone', details.phone),
 		  	  formatDetail('Email', details.email),
 			  formatDetail('Gender', details.gender),
@@ -206,8 +232,7 @@
 			
 			
 			
-          //infowindow.setContent(place.name);
-          //infowindow.open(map, this);
+          
         });
       }
 
@@ -230,7 +255,7 @@
 			return [
 		'<div class="detail">',
 		'<label>', label, '</label>',
-'<div class="value">', (label == "Phone" ? "<a href=\"tel:"+value+"\">"+value+"</a>" : (typeof value == "object" ? value.join(', ') : value) ), '</div>',
+'<div class="value">', (label == "Phone" ? "<a href=\"tel:"+value+"\">"+value+"</a>" : (label == "Email" ? '<a href="mailto:'+value+'">'+value+'</a>' : (typeof value == "object" ? value.join(', ') : value) ) ), '</div>',
 		'</div>'
 		].join('');
 	  }
@@ -240,10 +265,11 @@
   </head>
   <body>
 	<div id="wrapper">
-		<div id="header"><b>Physicians Near You</b></div>
+		<div id="header"><img id="smallico" src="/favicon.ico" /><b>     Physicians Near You</b></div>
     		<div id="map"></div>
     		<div id="details"></div>
-    		<div id="reviews"></div>	
+    		<div id="reviews"><div id="instructions">Touch a Place for More Info</div></div>
+		<div id="footer"></div>	
 	</div>
   </body>
 </html>
