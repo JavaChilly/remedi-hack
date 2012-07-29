@@ -1,17 +1,21 @@
 <% 
-	var insurances = languages = specialties = [];
+	var insurances = languages = reviews = specialties = [];
 	var acceptingNew = boardCertified = false;
-	var affiliation = gender = name = '';
+	var affiliation = gender = name = rating = school = degree = '';
 	
 	if (overlayRecord != null) {
 		name = overlayRecord.name ? overlayRecord.name : '';
 		insurances = overlayRecord.insurances ? overlayRecord.insurances : [];
 		languages = overlayRecord.languages ? overlayRecord.languages : [];
 		specialties = overlayRecord.specialties ? overlayRecord.specialties : [];
+		reviews = overlayRecord.reviews ? overlayRecord.reviews : [];
 		acceptingNew = overlayRecord.acceptingNew ? overlayRecord.acceptingNew : false;
 		boardCertified = overlayRecord.boardCertified ? overlayRecord.boardCertified : false;
 		affiliation = overlayRecord.affiliation ? overlayRecord.affiliation : '';
+		school = overlayRecord.school ? overlayRecord.school : '';
+		rating = overlayRecord.rating ? overlayRecord.rating : '';
 		gender = overlayRecord.gender ? overlayRecord.gender : '';
+		degree = overlayRecord.degree ? overlayRecord.degree : '';
 	}
 %>
 <html>
@@ -20,14 +24,29 @@
 			Google Identifier Name:</br>
 			<input type="text" name="record.name" value="<%=record.name%>"/>
 
-			<br>Actual Physician Name:</br>
+			<p>Actual Physician Name:</br>
 			<input type="text" name="physname" value="<%=name%>"/>
+			</p>
+			
+			
 
 			<p>Gender:<br>
 			<select name="gender">
 				<option value="">-select-</option>
 				<option value="male"<%=(gender == "male" ? " selected" : "")%>>Male</option>
 				<option value="female"<%=(gender == "female" ? " selected" : "")%>>Female</option>
+			</select>
+			</p>
+
+			<p>School</br>
+			<input type="text" name="school" value="<%=school%>"/>
+			</p>
+
+			<p>Degree Type:<br>
+			<select name="degree">
+				<option value="">-select-</option>
+				<option value="md"<%=(gender == "md" ? " selected" : "")%>>MD</option>
+				<option value="do"<%=(gender == "do" ? " selected" : "")%>>DO</option>
 			</select>
 			</p>
 			
@@ -68,6 +87,19 @@
 			<input type="text" name="affiliation" value="<%=affiliation%>">
 			</p>
 			
+			<p>Rating</br>
+			<input type="text" name="rating" value="<%=rating%>"/>
+			</p>
+
+			<p>Reviews: (one per line)<br>
+			<textarea name="reviews" rows="5" cols="45"><%
+			for ( var i = 0; i < reviews.length; i++) {
+				%><%=reviews[i]%>
+<%
+			}
+			%></textarea>
+			</p>
+
 			<input type="submit" name="submit" value="Save">
 		</form>
 	</body>
