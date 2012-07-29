@@ -1,0 +1,9 @@
+<html>
+<body>
+	<form method="POST" action="/test/places/doctor/">
+		<textarea name="doctorContent" rows="5" cols="50"></textarea>
+		<input type="text" name="provider" />
+		<input type="submit" value="submit" name="submit"/>
+	</form>
+</body>
+</html>

@@ -1,0 +1,8 @@
+<html>
+	<body>
+		<form action="/test/places/doctors/" method="POST">
+			<textarea name="doctorcontent" rows="4" cols="40"></textarea>
+			<input name="submit" type="submit" value="Submit">
+		</form>
+	</body>
+</html>

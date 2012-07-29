@@ -25,7 +25,6 @@ var linesToArray = function(stringVal) {
 		console.log(stringVal[i]);
 		if(stringVal[i] != ""){
 			myreturn[j] = stringVal[i];
-			j++;
 		}
 	}
 	return myreturn;

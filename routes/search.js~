@@ -58,12 +58,15 @@ exports.filterPlaces = function( req, res, next ) {
 	console.log(myprovider);
 	req.overlayCollection.find( {id : {$in: ids} , insurances : myprovider}, function( err, cursor ) {
 		cursor.toArray(function(err, items) {
-		//res.write('<table>');			
-		//for(var i = 0; i < items.length; i++){
-			res.send( JSON.stringify( items ) );
-		//});
+		res.write('<table>');			
+		for(var i = 0; i < items.length; i++){
+			console.log(items[i].id);
+			console.log(items[i].insurances);
+			res.write( '<tr><td>' + items[i].id + "</td><td>" + items[i].insurances + "</td><td>" + items[i].gender + "</td></tr>");			
+			}
+			res.end();
 		});
-		//res.write('</table>');
+		res.write('</table>');
 	});
 	
 }
