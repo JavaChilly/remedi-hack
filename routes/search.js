@@ -42,7 +42,7 @@ exports.listPlaces = function( req, res, next ) {
 
 exports.filterPlaces = function( req, res, next ) {
 	var input = JSON.parse( req.body.doctorContent );
-
+	
 	var myprovider = req.body.provider;
 	var placetype = req.params.placetype;
 	var ids = input.ids;
