@@ -39,7 +39,7 @@ function success(position) {
   var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
   //window.location = 'https://maps.googleapis.com/maps/api/place/search/json?location=' + position.coords.latitude + ',' + position.coords.longitude + '&rankby=distance&types=doctor&sensor=true&key=AIzaSyADxmEYdo_V3fyNL7jaMnhIZ_dP65QO6to';
   
-  $.getJSON('https://maps.googleapis.com/maps/api/place/search/json?location=' + position.coords.latitude + ',' + position.coords.longitude + '&rankby=distance&types=doctor&sensor=true&key=AIzaSyADxmEYdo_V3fyNL7jaMnhIZ_dP65QO6to'
+  $.getJSON('https://maps.googleapis.com/maps/api/place/search/json?location=' + position.coords.latitude + ',' + position.coords.longitude + '&rankby=distance&types=doctor&sensor=true&key=AIzaSyADxmEYdo_V3fyNL7jaMnhIZ_dP65QO6to&callback=?'
   , function(data) {
   console.log(data);
   });
