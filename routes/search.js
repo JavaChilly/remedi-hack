@@ -4,6 +4,13 @@ var db     = require( '../lib/db' ),
 
 var exports = module.exports;
 
+exports.mapPlaces = function( req, res, next ) {
+	res.locals.provider = req.query.provider || 'Cheap+Medical';
+	res.render("map_places", { provider: req.locals.provider });
+	res.end();
+}
+
+
 exports.getPlaces = function( req, res, next ) {
 	// doctor, dentist, pharmacy, etc
 	var placetype = req.params.placetype;

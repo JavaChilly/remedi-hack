@@ -6,7 +6,7 @@ var exports = module.exports;
 var mhealthAppName      = 'remedi';
 var mhealthClientSecret = 'HQy10qHM2nGEc6Sc6ncO7qsh7tvaWWtUEEEwB6E7';
 var mhealthRedirect     = 'http://10.4.98.89:8200/mhealthCallback/';
-var postloginRedirect   = 'http://myremedi.weebly.com/accounts.html';
+var postloginRedirect   = 'http://myremedi.weebly.com/1.html';
 
 //var mhealthAuthURL = "https://" + mhealthAppName + ":" + mhealthClientSecret + "@mhealth.att.com/access_token.json";
 
