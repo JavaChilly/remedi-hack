@@ -41,20 +41,14 @@ exports.listPlaces = function( req, res, next ) {
 }
 
 exports.filterPlaces = function( req, res, next ) {
-	var places = JSON.parse( req.body.doctorContent );
+	var input = JSON.parse( req.body.doctorContent );
+
 	var myprovider = req.body.provider;
 	var placetype = req.params.placetype;
-
-	if ( !places.places ) {
-		places = {places : [ places ]};
-	}
-	places = places.places;
-	var ids = new Array();
-	for(var i = 0; i < places.length; i++){
-		ids[i] = places[i].id;
-	}
+	var ids = input.ids;
+	console.log(ids);
 	console.log(ids.length);
-	res.header( 'content-type', 'text/json');	
+	res.header( 'content-type', 'text/html');	
 	console.log(myprovider);
 	req.overlayCollection.find( {id : {$in: ids} , insurances : myprovider}, function( err, cursor ) {
 		cursor.toArray(function(err, items) {
