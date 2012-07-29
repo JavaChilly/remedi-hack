@@ -1,9 +1,10 @@
 <% 
 	var insurances = languages = specialties = [];
 	var acceptingNew = boardCertified = false;
-	var affiliation = gender = '';
+	var affiliation = gender = name = '';
 	
 	if (overlayRecord != null) {
+		name = overlayRecord.name ? overlayRecord.name : '';
 		insurances = overlayRecord.insurances ? overlayRecord.insurances : [];
 		languages = overlayRecord.languages ? overlayRecord.languages : [];
 		specialties = overlayRecord.specialties ? overlayRecord.specialties : [];
@@ -16,9 +17,12 @@
 <html>
 	<body>
 		<form method="post" action="/test/places/doctor/save/<%=record.id%>/">
-			Name:</br>
+			Google Identifier Name:</br>
 			<input type="text" name="record.name" value="<%=record.name%>"/>
-			
+
+			<br>Actual Physician Name:</br>
+			<input type="text" name="physname" value="<%=name%>"/>
+
 			<p>Gender:<br>
 			<select name="gender">
 				<option value="">-select-</option>

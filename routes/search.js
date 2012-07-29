@@ -54,7 +54,7 @@ exports.filterPlaces = function( req, res, next ) {
 		ids[i] = places[i].id;
 	}
 	console.log(ids.length);
-	res.header( 'content-type', 'text/html');	
+	res.header( 'content-type', 'text/json');	
 	console.log(myprovider);
 	req.overlayCollection.find( {id : {$in: ids} , insurances : myprovider}, function( err, cursor ) {
 		cursor.toArray(function(err, items) {

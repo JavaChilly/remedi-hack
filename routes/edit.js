@@ -50,6 +50,7 @@ exports.saveEditor = function( req, res, next ) {
 	
 	var overlayRecord = {
 		id : req.params.id,
+		name : req.body.physname ? req.body.physname : '',
 		insurances  : linesToArray(req.body.insurances),
 		specialties : linesToArray(req.body.specialties),
 		languages   : linesToArray(req.body.languages),
