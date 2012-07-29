@@ -13,6 +13,27 @@
         border: 1px solid #333;
         margin-top: 0.6em;
       }
+
+		#details {
+			background-color: #EEE;
+		}
+	
+		DIV.details {
+			overflow: hidden;
+		}
+	
+		.details LABEL {
+			width: 160px;
+			display: block;
+			float: left;
+			text-align: left;
+		}
+	
+		.details DIV.value {
+			margin-left: 4px;
+			float: left;
+		}
+	
     </style>
 
     <script>
@@ -125,7 +146,7 @@
 	  function formatDetail(label, value) {
 		return [
 		'<div class="detail">',
-		'<div class="label">', label, '</div>',
+		'<label>', label, '</label>',
 		'<div class="value">', (typeof value == "object" ? value.join(', ') : value), '</div>',
 		'</div>'
 		].join('');
