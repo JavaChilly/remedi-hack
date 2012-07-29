@@ -6,7 +6,7 @@ var exports = module.exports;
 
 exports.mapPlaces = function( req, res, next ) {
 	res.locals.provider = req.query.provider || 'Cheap+Medical';
-	res.render("map_places", { provider: req.locals.provider });
+	res.render("map_places", { provider: res.locals.provider });
 	res.end();
 }
 

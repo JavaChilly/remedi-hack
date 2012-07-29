@@ -6,7 +6,7 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"> 
     <title>Physicians Near You</title>
-    <script src="https://maps.googleapis.com/maps/api/js?sensor=true&libraries=places"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?sensor=true&libraries=places&radius=5000"></script>
 	<script src="http://jqueryjs.googlecode.com/files/jquery-1.2.6.min.js"></script>
 	
     <style>
@@ -230,7 +230,7 @@
 			return [
 		'<div class="detail">',
 		'<label>', label, '</label>',
-		'<div class="value">', (typeof value == "object" ? value.join(', ') : value), '</div>',
+'<div class="value">', (label == "Phone" ? "<a href=\"tel:"+value+"\">"+value+"</a>" : (typeof value == "object" ? value.join(', ') : value) ), '</div>',
 		'</div>'
 		].join('');
 	  }
