@@ -2,7 +2,10 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Google Maps JavaScript API v3 Example: Place Search</title>
+    <meta name="format-detection" content="telephone=yes">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"> 
+    <title>Physicians Near You</title>
     <script src="https://maps.googleapis.com/maps/api/js?sensor=true&libraries=places"></script>
 	<script src="http://jqueryjs.googlecode.com/files/jquery-1.2.6.min.js"></script>
 	
@@ -11,27 +14,82 @@
         height: 205px;
         width: 310px;
         border: 1px solid #333;
-        margin-top: 0.6em;
+        margin-top: 0;
       }
 
+
+	#wrapper {
+		margin: 0 auto;		
+		width: 320px;
+	}
+	
+	#header {
+		padding-top: 10px;
+		font-size: 16pt;
+		background-image: url('/images/ribbon_header.png');
+		height: 36px;
+		text-align: center;
+		color: white;
+		width: 312px;
+	}
+	body {
+		margin: 0;
+		padding: 0;
+		font-family: sans-serif;
+
+	}
+
+	
 		#details {
-			background-color: #EEE;
+			border-collapse:collapse;
+			border:1px solid #666;
+			background-color: #067591;
+			width : 310px;
 		}
 	
-		DIV.details {
+		#reviews {
+			border-collapse:collapse;
+			border:1px solid #666;
+			background-color: #399bb5;
+			color: #FFF;
+			width : 310px;
+		}
+		.review {
+			border-collapse:collapse;
+			padding: 2px;
+			border:1px solid #666;
+		}
+
+		DIV.detail {
+			
+			position: relative;
+			width: 100%;
 			overflow: hidden;
 		}
 	
-		.details LABEL {
-			width: 160px;
+		.detail LABEL {
+			
+			font-weight: bold;
+			position: absolute;
+			left: 0;
+			height: 100%;
+			color: #FFF;
+			width: 95px;
 			display: block;
 			float: left;
 			text-align: left;
+			padding: 2px;
 		}
 	
-		.details DIV.value {
+		.detail DIV.value {
+			border-collapse:collapse;
+			border:1px solid #666;	
+			padding: 2px 4px;
+			background-color: #FFF;
+			display: block;
 			margin-left: 4px;
-			float: left;
+			float: right;
+			width: 205px;
 		}
 	
     </style>
@@ -130,21 +188,46 @@
         google.maps.event.addListener(marker, 'click', function() {
 		  $('#details').html([
 			  formatDetail('Name', details.name),
+			  formatDetail('Phone', details.phone),
+		  	  formatDetail('Email', details.email),
 			  formatDetail('Gender', details.gender),
+			  formatDetail('School', details.school),
+			  formatDetail('Degree', details.degree),
 			  formatDetail('Languages', details.languages),
 			  formatDetail('Specialties', details.specialties),
-			  formatDetail('Accepting Patients', details.acceptingNew ? 'Yes' : 'No'),
-			  formatDetail('Board Certified', details.boardCertified ? 'Yes' : 'No'),
-			  formatDetail('Affiliation', details.affiliation)
+			  formatDetail('New OK?', details.acceptingNew ? 'Yes' : 'No'),
+			  formatDetail('Certified?', details.boardCertified ? 'Yes' : 'No'),
+			  formatDetail('Affiliation', details.affiliation),
+			  formatDetail('Rating', details.rating)
 			].join(""));
+		  $('#reviews').html([
+			  formatReview(details.reviews)
+		  ].join(""));
+			
+			
 			
           //infowindow.setContent(place.name);
           //infowindow.open(map, this);
         });
       }
 
+	  function formatReview(review) {
+		if(review == ""){
+			review = "<i>Information Unavailable</i>";
+		}
+			return [
+			'<div class="review"><b>Reviews :</b></div>',
+			'<div class="review">', (typeof review == "object" ? review.join('</div><div class="review"> ') : value), '</div>',
+		].join('');				
+
+
+	  }
+
 	  function formatDetail(label, value) {
-		return [
+		if(value == ""){
+			value = "<i>Information Unavailable</i>";
+		}
+			return [
 		'<div class="detail">',
 		'<label>', label, '</label>',
 		'<div class="value">', (typeof value == "object" ? value.join(', ') : value), '</div>',
@@ -156,10 +239,11 @@
     </script>
   </head>
   <body>
-	<div><b>Doctors Near You</b></div>
-    <div id="map"></div>
-    <div id="details">
-	
-    </div>
+	<div id="wrapper">
+		<div id="header"><b>Physicians Near You</b></div>
+    		<div id="map"></div>
+    		<div id="details"></div>
+    		<div id="reviews"></div>	
+	</div>
   </body>
 </html>

@@ -1,7 +1,7 @@
 <% 
 	var insurances = languages = reviews = specialties = [];
 	var acceptingNew = boardCertified = false;
-	var affiliation = gender = name = rating = school = degree = '';
+	var affiliation = gender = name = rating = school = phone = email = degree = '';
 	
 	if (overlayRecord != null) {
 		name = overlayRecord.name ? overlayRecord.name : '';
@@ -12,6 +12,8 @@
 		acceptingNew = overlayRecord.acceptingNew ? overlayRecord.acceptingNew : false;
 		boardCertified = overlayRecord.boardCertified ? overlayRecord.boardCertified : false;
 		affiliation = overlayRecord.affiliation ? overlayRecord.affiliation : '';
+		phone = overlayRecord.phone ? overlayRecord.phone : '';
+		email = overlayRecord.email ? overlayRecord.email : '';
 		school = overlayRecord.school ? overlayRecord.school : '';
 		rating = overlayRecord.rating ? overlayRecord.rating : '';
 		gender = overlayRecord.gender ? overlayRecord.gender : '';
@@ -28,7 +30,13 @@
 			<input type="text" name="physname" value="<%=name%>"/>
 			</p>
 			
-			
+			<p>Phone Number</br>
+			<input type="text" name="phone" value="<%=phone%>"/>
+			</p>
+
+			<p>E-mail</br>
+			<input type="text" name="email" value="<%=email%>"/>
+			</p>
 
 			<p>Gender:<br>
 			<select name="gender">
@@ -45,8 +53,8 @@
 			<p>Degree Type:<br>
 			<select name="degree">
 				<option value="">-select-</option>
-				<option value="md"<%=(gender == "md" ? " selected" : "")%>>MD</option>
-				<option value="do"<%=(gender == "do" ? " selected" : "")%>>DO</option>
+				<option value="md"<%=(degree == "md" ? " selected" : "")%>>MD</option>
+				<option value="do"<%=(degree == "do" ? " selected" : "")%>>DO</option>
 			</select>
 			</p>
 			
